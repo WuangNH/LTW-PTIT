@@ -2,6 +2,9 @@ package hotel.controller;
 
 import java.util.List;
 
+import hotel.data.AccountRepository;
+import hotel.data.ClientRepository;
+import hotel.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +24,16 @@ import hotel.data.RoomRepository;
 @SessionAttributes("alteredRoom") // thuộc tính "alteredRoom" - được lưu trữ trong phiên
 public class ManageRoomController {
 
-	@Autowired 
+	@Autowired // tự động tiêm các đối tượng để sử dụng các phương thức và thuộc tính
+	private AccountRepository accountRepo;
+
+	@Autowired
+	private UserRepository userRepo;
+
+	@Autowired
+	private ClientRepository clientRepo;
+
+	@Autowired
 	private RoomRepository roomRepo;
 
 	@ModelAttribute("alteredRoom")

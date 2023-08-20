@@ -23,6 +23,9 @@ public class Booking {
 	
 	@ManyToOne(targetEntity = Client.class, cascade = CascadeType.MERGE)
 	private Client client;//thuộc tính client là khóa ngoại 1 khách hàng có thể đặt nhiều lần
+
+
+
 	
 	private String checkin;
 	private String checkout;
@@ -31,4 +34,7 @@ public class Booking {
 	private boolean isPaid;//thuộc tính đại diện cho trạng thái khách thanh toán hay chưa
 	private boolean isCancelled;//thuộc tính đại diện cho trạng thái đơn đặt phòng bị hủy hay chưa
 	private String note;
+//	public void isActive() {
+//		this.isReceive = true;
+//	}
 }

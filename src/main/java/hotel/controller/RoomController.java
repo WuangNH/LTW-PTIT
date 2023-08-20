@@ -16,7 +16,8 @@ import hotel.data.RoomRepository;
 
 @Controller
 @RequestMapping("/room") // xử lý yêu cầu HTTP trên đường dẫn "/room" mức class
-public class RoomController {
+public class
+RoomController {
 	@Autowired
 	private RoomRepository roomRepo;
 

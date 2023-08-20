@@ -8,6 +8,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import hotel.data.AccountRepository;
+import hotel.data.ClientRepository;
+import hotel.data.UserRepository;
+import hotel.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -27,8 +31,17 @@ import hotel.model.Booking;
 public class HomeController {
 	@Autowired
 	private BookingRepository bookingRepo;
+
+	@Autowired // tự động tiêm các đối tượng để sử dụng các phương thức và thuộc tính
+	private AccountRepository accountRepo;
+
+	@Autowired
+	private UserRepository userRepo;
+
+	@Autowired
+	private ClientRepository clientRepo;
 	
-	@GetMapping("/") // tiếp nhận yêu cầu từ trang /
+	@RequestMapping("/") // tiếp nhận yêu cầu từ trang /
 	public String home(Model model, HttpSession session) {
 		// dùng model để lưu data từ session
 		if (session.getAttribute("currentAccount") != null) {
@@ -74,7 +87,27 @@ public class HomeController {
 	    }
 	    return "viewReport";
 	}
-	
+	@GetMapping("/enableb/{id}")
+	public String enableAccount(@PathVariable("id") Long id) {
+		Booking booking = bookingRepo.findById(id).orElse(null);
+		if (!booking.isReceive()) {
+			booking.setReceive(true);
+			booking.setPaid(true);
+			bookingRepo.save(booking);
+		}
+		return "redirect:/viewReport";
+	}
+	@GetMapping("/disableb/{id}")
+	public String disableAccount(@PathVariable("id") Long id) {
+		Booking booking = bookingRepo.findById(id).orElse(null);
+		if (booking.isReceive()) {
+			booking.setReceive(false);
+			booking.setPaid(false);
+			bookingRepo.save(booking);
+		}
+		return "redirect:/viewReport";
+	}
+
 //	tìm những phòng được đặt bởi khách mà chưa bị hủy
 	private List<Booking> filterByCancel(List<Booking> bookings) {
 		List<Booking> list = new ArrayList<>();

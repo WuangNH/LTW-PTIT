@@ -180,6 +180,24 @@
 		  text-align: left;
 		}
 
+		td button {
+			padding: 10px;
+			background-color: #007bff;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		td button:hover {
+			background-color: #0062cc;
+		}
+		tr th {
+			text-align: center;
+		}
+
+
 
 	</style>
 </head>
@@ -220,8 +238,10 @@
 					<th>Ngày nhận</th>
 					<th>Ngày trả</th>
 					<th>Tổng số tiền</th>
-					<th>Nhận phòng</th>
-					<th>Thanh toán</th>
+					<th>Trạng thái</th>
+					<th>Trạng thái</th>
+					<th>Hành Động</th>
+
 				</tr>
 			</thead>
 	
@@ -241,6 +261,17 @@
 	
 					<td th:if="${booking.isPaid}" th:text="'Đã thanh toán'" align="center"></td>
 					<td th:unless="${booking.isPaid}" th:text="'Chưa thanh toán'" align="center"></td>
+					<td th:if="${booking.isReceive()}">
+						<button><a th:href="@{/disableb/{id}(id=${booking.id})}" th:text="'Nhận Phòng'"
+								   align="center"></a></button>
+					</td>
+					<td th:unless="${booking.isReceive()}">
+						<button>
+							<a th:href="@{/enableb/{id}(id=${booking.id})}" th:text="'Trả phòng'"
+								   align="center"></a>
+						</button>
+					</td>
+
 				</tr>
 				<tr>
 					<td></td>
