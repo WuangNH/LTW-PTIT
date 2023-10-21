@@ -153,7 +153,9 @@
 		  cursor: pointer;
 		  transition: all 0.2s ease-in-out;
 		  margin-left: 10px;
+		  margin-top: 5px;
 		  text-decoration: none;
+
 		}
 		
 		.btn-primary:hover {
@@ -165,6 +167,10 @@
 		.btn-primary:active {
 		  transform: translateY(2px);
 		  box-shadow: none;
+		}
+
+		.room-actions {
+			width: 210px;
 		}
 
 		
@@ -203,17 +209,17 @@
 	          <div class="room-info">
 	            <h2 th:text="${room.name}"></h2>
 	            <p th:text="${room.type}"></p>
-	            <p th:text="${room.price} + ',000 VNĐ/ngày'"></p>
+	            <p th:text="${room.price} + '.000 VNĐ/ngày'"></p>
 	          </div>
 	          <div class="room-actions">
-	            <button class="btn btn-primary btn-sm"><a th:href="@{/manage/room/details/{id}(id=${room.id})}" th:text="'Chi tiết'"></a></button>
-	            <button class="btn btn-primary btn-sm"><a th:href="@{/manage/booking/{id}(id=${room.id})}" th:text="'Yêu cầu đặt phòng'"></a></button>
+	            <button style="width:166px" class="btn btn-primary btn-sm"><a th:href="@{/manage/room/details/{id}(id=${room.id})}" th:text="'Chi tiết'"></a></button>
+	            <button style="width:166px" class="btn btn-primary btn-sm"><a th:href="@{/manage/booking/{id}(id=${room.id})}" th:text="'Yêu cầu đặt phòng'"></a></button>
 	          </div>
 	        </li>
 	      </ul>
 	</main>
 	<footer>
-      <p style="text-align: center;">&copy; 2023 Nhóm . All rights reserved.</p>
+      <p style="text-align: center;">&copy; 2023 Nhóm 3. All rights reserved.</p>
     </footer>
 </body>
 

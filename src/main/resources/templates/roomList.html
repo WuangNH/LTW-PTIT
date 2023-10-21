@@ -145,7 +145,7 @@
 		
 		.btn-primary {
           width: 83%;
-          margin-bottom: 15px;
+          margin-bottom: 10px;
 		  background-color: #2196f3;
 		  color: #fff;
 		  border: none;
@@ -210,7 +210,7 @@
           <div class="room-info">
             <h2 th:text="${room.name}"></h2>
             <p th:text="${room.type}"></p>
-            <p th:text="${room.price} + ',000 VNĐ/ngày'"></p>
+            <p th:text="${room.price} + '.000 VNĐ/ngày'"></p>
           </div>
           <div class="room-actions ">
             <button class="btn btn-primary btn-sm details--room"><a th:href="@{/room/details/{id}(id=${room.id})}" th:text="'Chi tiết'"></a></button>
@@ -220,7 +220,7 @@
       </ul>
     </main>
     <footer>
-      <p style="text-align: center;">&copy; 2023 Nhóm . All rights reserved.</p>
+      <p style="text-align: center;">&copy; 2023 Nhóm 3. All rights reserved.</p>
     </footer>
   </div>
 </body>
