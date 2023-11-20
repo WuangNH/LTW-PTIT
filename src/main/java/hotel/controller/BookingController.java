@@ -76,7 +76,7 @@ public class BookingController {
 		Date datePayment = fomatter.parse(currentBooking.getCheckout());
 //		kiểm tra ngày
 		if (dateReceipt.after(datePayment) || dateReceipt.equals(datePayment)) {
-			model.addAttribute("message", "Kiem tra lai thoi gian");
+			model.addAttribute("message", "Kiểm tra lại thời gian");
 			model.addAttribute("room", room);
 			return "bookingInfo";
 		}

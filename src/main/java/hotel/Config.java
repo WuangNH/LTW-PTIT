@@ -26,7 +26,7 @@ public class Config extends WebSecurityConfigurerAdapter{
 		// http.authorizeRequests() chỉ định rằng yêu cầu sẽ được xác minh bằng cách nào  
 		// Phương thức antMatchers chỉ định các URL và các quyền truy cập cần thiết để truy cập vào chúng.
 		http.authorizeRequests()
-		.antMatchers("/account/disable/**", "/account/enable/**", "/account/change/**").hasRole("ADMIN")
+		.antMatchers("/account/disable/**", "/account/enable/**", "/account/change/**", "/account/list").hasRole("ADMIN")
 		.antMatchers("/manage/**").hasRole("MANAGER") // áp dụng các quy tắc bảo mật /manage/** với quyền manager 
 		.antMatchers("/booking/**").hasAnyRole("USER")
 		.antMatchers("/login", "/", "/account/**", "/room/**").permitAll()

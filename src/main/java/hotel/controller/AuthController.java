@@ -27,7 +27,7 @@ public class AuthController {
 
 	@GetMapping
 	public String getUser(@ModelAttribute("currentAccount") Account currentAccount) {
-
+		// để lấy tên người dùng hiện tại đang được xác thực trong hệ thống
 		String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
 		// tìm tài khoản có tên currentUsername trong csdl
 		Account account = accountRepo.findByUsername(currentUsername).orElse(null);

@@ -17,11 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import hotel.data.BookingRepository;
 import hotel.model.Booking;
@@ -147,4 +143,12 @@ public class HomeController {
 	public String logout(HttpSession session) {
 		return "logout";
 	}
+
+	@PostMapping("/logout")
+	protected String logout2(HttpSession session) {
+		// Xử lý đăng xuất ở đây (invalidate session, xóa thông tin đăng nhập, v.v.)
+		session.invalidate();
+		return "redirect:/"; // Sau khi đăng xuất, bạn có thể chuyển người dùng đến trang chủ hoặc trang khác tùy ý.
+	}
+
 }
