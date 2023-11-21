@@ -103,6 +103,7 @@ public class ManageRoomController {
 //		cập nhập các thông tin như giá, loại phòng rồi lưu vào csdl
 		alteredroom.setPrice(room.getPrice());
 		alteredroom.setType(room.getType());
+		alteredroom.setFloor(room.getFloor());
 		alteredroom.setDescription(room.getDescription());
 		alteredroom.setImage(room.getImage());
 		roomRepo.save(alteredroom);

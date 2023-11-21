@@ -159,7 +159,9 @@
 	
 			<tr>
 				<td>
-					<button><a th:href="@{/booking/{id}(id=${room.id})}" th:text="'Đặt phòng'"></a></button>
+					<button class="btn btn-primary btn-sm details--room" th:if="${room.status eq 'Trống'}" >
+						<a th:href="@{/booking/{id}(id=${room.id})}" th:text="'Đặt phòng'"></a>
+					</button>
 				</td>
 						
 			</tr>
