@@ -209,7 +209,7 @@
 	          <div class="room-info">
 	            <h2 th:text="${room.name}"></h2>
 	            <p th:text="${room.type}"></p>
-	            <p th:text="${room.price} + '.000 VNĐ/ngày'"></p>
+	            <p th:text="${room.price} + ' USD/ngày'"></p>
 	          </div>
 	          <div class="room-actions">
 	            <button style="width:166px" class="btn btn-primary btn-sm"><a th:href="@{/manage/room/details/{id}(id=${room.id})}" th:text="'Chi tiết'"></a></button>

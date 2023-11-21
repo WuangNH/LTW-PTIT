@@ -104,8 +104,12 @@
 					</td>
 				</tr>
 				<tr>
+					<td th:text="'Tầng: '" align="left"></td>
+					<td><span><input type="number" th:field="${room.floor}" min="1" max="5"></span></td>
+				</tr>
+				<tr>
 					<td th:text="'Giá phòng: '" align="left"></td>
-					<td><span><input type="number" th:field="${room.price}"></span><span th:text="'VNĐ/ngày'"></span></td>
+					<td><span><input type="number" th:field="${room.price}"></span><span th:text="'USD/ngày'"></span></td>
 				</tr>
 				<tr>
 					<td th:text="'Chi tiết: '" align="left"></td>

@@ -135,8 +135,12 @@
 				<td th:text="${room.type}"></td>
 			</tr>
 			<tr>
+				<td th:text="'Số tầng: '" align="left"></td>
+				<td th:text="${room.floor}"></td>
+			</tr>
+			<tr>
 				<td th:text="'Giá phòng: '" align="left"></td>
-				<td th:text="${room.price} + ',000 VNĐ/ngày'"></td>
+				<td th:text="${room.price} + ' USD/ngày'"></td>
 			</tr>
 			<tr>
 				<td th:text="'Ghi chú: '" align="left"></td>

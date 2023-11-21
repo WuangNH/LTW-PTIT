@@ -17,6 +17,7 @@ public class Room {
 	private Long id;
 	private String name;
 	private String type;
+	private Long floor;
 	private Long price;
 	private String image;
 	private String description;

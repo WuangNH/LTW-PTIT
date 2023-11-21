@@ -13,7 +13,7 @@
 		h1 {
 			text-align: center;
 			margin-top: 30px;
-			margin-bottom: 50px;
+			margin-bottom: 20px;
 			color: #333;
 		}
 		
@@ -185,7 +185,28 @@
 
         }
 
-	</style>
+        .floor-count {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .floor-button {
+            border: none;
+            /* Thêm các thiết lập kiểu dáng cho nút tầng nếu cần */
+        }
+
+        .floor-button a:hover {
+            background-color: #237bc1;
+            /* Thêm các thiết lập kiểu dáng cho nút tầng nếu cần */
+        }
+
+        .floor-button a {
+            text-decoration: none;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -202,6 +223,16 @@
     </header>
     <main>
       <h1>Danh sách phòng</h1>
+        <div class="floor-count">
+            <p>Số tầng:</p>
+            <div class="floor-buttons">
+                <button class="floor-button" ><a th:href="@{/room/floor/1}" th:text="'1'"></a></button>
+                <button class="floor-button" ><a th:href="@{/room/floor/2}" th:text="'2'"></a></button>
+                <button class="floor-button" ><a th:href="@{/room/floor/3}" th:text="'3'"></a></button>
+                <button class="floor-button" ><a th:href="@{/room/floor/4}" th:text="'4'"></a></button>
+                <button class="floor-button" ><a th:href="@{/room/floor/5}" th:text="'5'"></a></button>
+            </div>
+        </div>
       <ul class="room-list">
         <li th:each="room: ${rooms}" class="room-item">
           <div class="room-image">
@@ -210,7 +241,7 @@
           <div class="room-info">
             <h2 th:text="${room.name}"></h2>
             <p th:text="${room.type}"></p>
-            <p th:text="${room.price} + '.000 VNĐ/ngày'"></p>
+            <p th:text="${room.price} + ' USD/ngày'"></p>
           </div>
           <div class="room-actions ">
             <button class="btn btn-primary btn-sm details--room"><a th:href="@{/room/details/{id}(id=${room.id})}" th:text="'Chi tiết'"></a></button>
