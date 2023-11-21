@@ -70,6 +70,8 @@ public class BookingController {
 	public String createBooking(Model model, Booking currentBooking, HttpSession session) throws ParseException {
 //		lấy thông tin  từ session 
 		Room room = (Room) session.getAttribute("currentRoom");
+		room.setStatus("Hết");
+		roomRepo.save(room);
 		Account account = (Account) session.getAttribute("currentAccount");
 		SimpleDateFormat fomatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateReceipt = fomatter.parse(currentBooking.getCheckin());
@@ -116,8 +118,11 @@ public class BookingController {
 	}
 
 	@GetMapping("/cancel/{id}") // xử lý yêu cầu hủy phòng rồi về trang danh sách phòng đã thuê
-	public String cancelBooking(@PathVariable("id") Long id) {
-		Booking booking = bookingRepo.findById(id).orElse(null); 
+	public String cancelBooking(@PathVariable("id") Long id, HttpSession session) {
+		Booking booking = bookingRepo.findById(id).orElse(null);
+		Room room = (Room) session.getAttribute("currentRoom");
+		room.setStatus("Trống");
+		roomRepo.save(room);
 		if (booking != null) {
 			booking.setCancelled(true);
 			bookingRepo.save(booking);

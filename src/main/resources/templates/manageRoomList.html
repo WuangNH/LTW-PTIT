@@ -186,6 +186,27 @@
 			transition: all 0.2s ease-in
 		}
 
+		.floor-count {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+
+		.floor-button {
+			border: none;
+			/* Thêm các thiết lập kiểu dáng cho nút tầng nếu cần */
+		}
+
+		.floor-button a:hover {
+			background-color: #237bc1;
+			/* Thêm các thiết lập kiểu dáng cho nút tầng nếu cần */
+		}
+
+		.floor-button a {
+			text-decoration: none;
+		}
+
 	</style>
 </head>
 
@@ -201,6 +222,16 @@
     </header>
 	<main>
 		<h1>Danh sách phòng</h1>
+		<div class="floor-count">
+			<p>Số tầng:</p>
+			<div class="floor-buttons">
+				<button class="floor-button" ><a th:href="@{/manage/room/floor/1}" th:text="'1'"></a></button>
+				<button class="floor-button" ><a th:href="@{/manage/room/floor/2}" th:text="'2'"></a></button>
+				<button class="floor-button" ><a th:href="@{/manage/room/floor/3}" th:text="'3'"></a></button>
+				<button class="floor-button" ><a th:href="@{/manage/room/floor/4}" th:text="'4'"></a></button>
+				<button class="floor-button" ><a th:href="@{/manage/room/floor/5}" th:text="'5'"></a></button>
+			</div>
+		</div>
 		<ul class="room-list">
 	        <li th:each="room: ${rooms}" class="room-item">
 	          <div class="room-image">

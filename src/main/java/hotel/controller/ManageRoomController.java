@@ -8,16 +8,12 @@ import hotel.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import hotel.model.Room;
 import hotel.data.RoomRepository;
+
+import javax.servlet.http.HttpSession;
 
 @Controller 
 @RequestMapping("/manage/room")// xử lý yêu cầu HTTP trên đường dẫn "/manage/room" mức class
@@ -46,6 +42,34 @@ public class ManageRoomController {
 		List<Room> rooms = (List<Room>) roomRepo.findAll();
 		model.addAttribute("rooms", rooms);
 		return "manageRoomList"; 
+	}
+
+	@GetMapping("/floor/{id}") //
+	public String viewFloor(Model model, @PathVariable("id") Long id, HttpSession session) {
+		List<Room> roomsFL = (List<Room>) roomRepo.findByFloor(id);
+		model.addAttribute("roomsFL", roomsFL);
+		Long floor = id;
+		model.addAttribute("floor", floor);
+		return "manageRoomFloor";
+	}
+
+	@GetMapping("/type")
+	public String viewType(Model model,
+						   @RequestParam(name = "floor", required = false) Long floor,
+						   @RequestParam(name = "type", required = false, defaultValue = "Thường") String type) {
+
+
+		// Lấy danh sách phòng theo floor và type
+		List<Room> roomsType = roomRepo.findByFloorAndType(floor, type);
+
+		// Thêm danh sách phòng vào model
+		model.addAttribute("roomsType", roomsType);
+
+		// Thêm giá trị floor và type vào model
+		model.addAttribute("floor", floor);
+		model.addAttribute("type", type);
+
+		return "manageRoomType";
 	}
 	
 //	xem chi tiết phòng 
@@ -89,6 +113,19 @@ public class ManageRoomController {
 	public String deleteRoom(@PathVariable("id") Long id) {
 		roomRepo.deleteById(id);
 		return "redirect:/manage/room";
+	}
+
+	@GetMapping("/changeSTT/{id}")
+	public String changeSTTRoom(@PathVariable("id") Long id) {
+		Room room = roomRepo.findById(id).orElse(null);
+		if(room.getStatus().equals("Trống")) {
+			room.setStatus("Hết");
+		}
+		else {
+			room.setStatus("Trống");
+		}
+		roomRepo.save(room);
+		return "redirect:/manage/room/details/" + id;
 	}
 	
 //	tiếp nhận yêu cầu thêm phòng
