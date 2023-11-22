@@ -254,7 +254,7 @@
 					<td th:text="${booking.room.price}+',000'" align="center"></td>
 					<td th:text="${booking.checkin}" align="center"></td>
 					<td th:text="${booking.checkout}" align="center"></td>
-					<td th:text="${booking.totalPrice}+',000'" align="center"></td>
+					<td th:text="${booking.totalPrice}+''" align="center"></td>
 	
 					<td th:if="${booking.isReceive}" th:text="'Đã nhận phòng'" align="center"></td>
 					<td th:unless="${booking.isReceive}" th:text="'Chưa nhận phòng'" align="center"></td>
