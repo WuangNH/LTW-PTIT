@@ -99,8 +99,8 @@
 	</nav>
 	<main>
 		<h1>Đặt phòng: <span th:text="${room.name}"></span></h1>
-		<form th:action="@{/booking}" method="post" th:object="${booking}">
-		
+		<form th:action="@{'/booking?floor=' + ${room.floor}}" method="post" th:object="${booking}">
+			<input  name="floor" th:value="${room.floor}" />
 			<table>
 				<tr>
 					<td th:text="'Ngày nhận: '" align="left"></td>
