@@ -1,5 +1,7 @@
 package hotel.controller;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -26,6 +28,8 @@ RoomController {
 	@GetMapping
 	public String viewList(Model model, HttpSession session) {
 		List<Room> rooms = (List<Room>) roomRepo.findAll();
+		// Sắp xếp danh sách phòng theo thuộc tính name
+		Collections.sort(rooms, Comparator.comparing(Room::getName));
 		model.addAttribute("rooms", rooms);
 		return "roomList";
 	}
@@ -33,6 +37,7 @@ RoomController {
 	@GetMapping("/floor/{id}") //
 	public String viewFloor(Model model, @PathVariable("id") Long id, HttpSession session) {
 		List<Room> roomsFL = (List<Room>) roomRepo.findByFloor(id);
+		Collections.sort(roomsFL, Comparator.comparing(Room::getName));
 		model.addAttribute("roomsFL", roomsFL);
 		Long floor = id;
 		model.addAttribute("floor", floor);
@@ -47,7 +52,7 @@ RoomController {
 
 		// Lấy danh sách phòng theo floor và type
 		List<Room> roomsType = roomRepo.findByFloorAndType(floor, type);
-
+		Collections.sort(roomsType, Comparator.comparing(Room::getName));
 		// Thêm danh sách phòng vào model
 		model.addAttribute("roomsType", roomsType);
 

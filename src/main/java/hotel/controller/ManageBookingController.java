@@ -6,12 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import hotel.model.Booking;
 import hotel.model.Room;
@@ -60,13 +55,21 @@ public class ManageBookingController {
 //	tiếp nhận yêu cầu hủy đặt phòng của khách theo id
 	@GetMapping("/cancel/{id}") // xử lý yêu cầu HTTP trên đường dẫn "/manage/cancel/{id}"
 	public String cancelBooking(
-			@PathVariable("id") Long id, 
+			@PathVariable("id") Long id,
+			@RequestParam(name = "roomName", required = false) String roomName,
 			@SessionAttribute("bookingRoom") Room bookingRoom)
 	{
 		Booking booking = bookingRepo.findById(id).orElse(null);
 		if (booking != null) { 
 			booking.setCancelled(true);
 			bookingRepo.save(booking);
+		}
+		Room room = roomRepo.findByName(roomName);
+		System.out.println(roomName);
+		if (room != null) {
+			room.setStatus("Trống");
+			bookingRepo.save(booking);
+			System.out.println(room.getStatus());
 		}
 		Long maPhong = bookingRoom.getId();
 		String link = "redirect:/manage/booking/" + maPhong.toString();

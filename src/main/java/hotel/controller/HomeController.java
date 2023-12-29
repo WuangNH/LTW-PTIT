@@ -8,10 +8,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import hotel.data.AccountRepository;
-import hotel.data.ClientRepository;
-import hotel.data.UserRepository;
+import hotel.data.*;
 import hotel.model.Account;
+import hotel.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -19,12 +18,13 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import hotel.data.BookingRepository;
 import hotel.model.Booking;
 
 
 @Controller
 public class HomeController {
+	@Autowired
+	private RoomRepository roomRepo;
 	@Autowired
 	private BookingRepository bookingRepo;
 
@@ -55,7 +55,9 @@ public class HomeController {
 	    	float total = 0;
 	        List<Booking> bookings = filterByCancel((List<Booking>) bookingRepo.findAll());
 	        for(Booking booking:bookings) {
-	        	total+=booking.getTotalPrice();
+				if (booking.isPaid()) {
+					total += booking.getTotalPrice();
+				}
 	        }
 	        model.addAttribute("total",total);
 	        model.addAttribute("bookings", bookings);
@@ -68,9 +70,12 @@ public class HomeController {
 	        // Lọc danh sách booking theo ngày bắt đầu và kết thúc
 	        List<Booking> bookings = filterByCancel((List<Booking>) bookingRepo.findAll());
 	        List<Booking> filteredBookings = filterAllByCheckBetween(bookings, startDate, endDate);
-	        for(Booking booking:filteredBookings) {
-	        	total+=booking.getTotalPrice();
-	        }
+			for (Booking booking : filteredBookings) {
+				// Sử dụng equals() để so sánh chuỗi, và kiểm tra xem booking có trạng thái "Đã thanh toán" không
+				if (booking.isPaid()) {
+					total += booking.getTotalPrice();
+				}
+			}
 	        model.addAttribute("total",total);
 	        model.addAttribute("bookings", filteredBookings);
 	        model.addAttribute("startDate", startDateStr);
@@ -151,4 +156,29 @@ public class HomeController {
 		return "redirect:/"; // Sau khi đăng xuất, bạn có thể chuyển người dùng đến trang chủ hoặc trang khác tùy ý.
 	}
 
+
+	@GetMapping("/cancel/{id}") // xử lý yêu cầu HTTP trên đường dẫn "/manage/cancel/{id}"
+	public String cancelBooking(
+			@PathVariable("id") Long id,
+			@RequestParam(name = "roomName", required = false) String roomName)
+	{
+//		Booking booking = bookingRepo.findById(id).orElse(null);
+//		if (booking != null) {
+//			booking.setCancelled(true);
+//			bookingRepo.save(booking);
+//		}
+		Room room = roomRepo.findByName(roomName);
+		System.out.println(roomName);
+		if (room != null) {
+			room.setStatus("Trống");
+			roomRepo.save(room);
+			System.out.println(room.getStatus());
+		}
+//		Long maPhong = bookingRoom.getId();
+
+		return "redirect:/viewReport";
+	}
+
 }
+
+

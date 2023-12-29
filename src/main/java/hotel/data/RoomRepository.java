@@ -14,4 +14,6 @@ public interface RoomRepository extends CrudRepository<Room, Long>{
 
     List<Room> findByFloorAndType(Long floor, String type);
 
+    Room findByName(String roomName);
+
 }

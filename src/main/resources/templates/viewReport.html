@@ -251,7 +251,7 @@
 					<td th:text="${booking.client.user.fullname}" align="center"></td>
 					<td th:text="${booking.client.user.idCard}" align="center"></td>
 					<td th:text="${booking.room.type}" align="center"></td>
-					<td th:text="${booking.room.price}+',000'" align="center"></td>
+					<td th:text="${booking.room.price}+''" align="center"></td>
 					<td th:text="${booking.checkin}" align="center"></td>
 					<td th:text="${booking.checkout}" align="center"></td>
 					<td th:text="${booking.totalPrice}+''" align="center"></td>
@@ -262,14 +262,26 @@
 					<td th:if="${booking.isPaid}" th:text="'Đã thanh toán'" align="center"></td>
 					<td th:unless="${booking.isPaid}" th:text="'Chưa thanh toán'" align="center"></td>
 					<td th:if="${booking.isReceive()}">
-						<button><a th:href="@{/disableb/{id}(id=${booking.id})}" th:text="'Nhận Phòng'"
-								   align="center"></a></button>
+<!--						<button>-->
+<!--							&lt;!&ndash;							<a th:href="@{/manage/booking/cancel/{id}(id=${booking.id})}" th:text="'Huỷ đặt phòng'" align="center"></a>&ndash;&gt;-->
+<!--							<a th:href="@{/manage/booking/cancel/{id}(id=${booking.id}, roomName=${booking.room.name})}" th:text="'Huỷ đặt phòng'" align="center"></a>-->
+<!--						</button>-->
+<!--						<button>-->
+<!--							<a th:href="@{/disableb/{id}(id=${booking.id})}" th:text="'Trả phòng'"-->
+<!--								   align="center"></a>-->
+<!--						</button>-->
+
 					</td>
 					<td th:unless="${booking.isReceive()}">
 						<button>
-							<a th:href="@{/enableb/{id}(id=${booking.id})}" th:text="'Trả phòng'"
+							<!--							<a th:href="@{/manage/booking/cancel/{id}(id=${booking.id})}" th:text="'Huỷ đặt phòng'" align="center"></a>-->
+							<a th:href="@{/cancel/{id}(id=${booking.id}, roomName=${booking.room.name})}" th:text="'Huỷ đặt phòng'" align="center"></a>
+						</button>
+						<button>
+							<a th:href="@{/enableb/{id}(id=${booking.id})}" th:text="'Nhận Phòng '"
 								   align="center"></a>
 						</button>
+
 					</td>
 
 				</tr>
