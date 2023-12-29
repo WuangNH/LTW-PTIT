@@ -60,17 +60,14 @@ public class ManageBookingController {
 			@SessionAttribute("bookingRoom") Room bookingRoom)
 	{
 		Booking booking = bookingRepo.findById(id).orElse(null);
-		if (booking != null) { 
-			booking.setCancelled(true);
-			bookingRepo.save(booking);
+		if (booking != null) {
+			// Xóa Booking từ cơ sở dữ liệu
+			bookingRepo.delete(booking);
+			System.out.println("Đã xóa Booking thành công.");
+		} else {
+			System.out.println("Không tìm thấy Booking với ID: " + id);
 		}
-		Room room = roomRepo.findByName(roomName);
-		System.out.println(roomName);
-		if (room != null) {
-			room.setStatus("Trống");
-			bookingRepo.save(booking);
-			System.out.println(room.getStatus());
-		}
+
 		Long maPhong = bookingRoom.getId();
 		String link = "redirect:/manage/booking/" + maPhong.toString();
 		return link;

@@ -159,11 +159,14 @@
 	
 					<td th:if="${booking.isPaid}" th:text="'Đã thanh toán'" align="center"></td>
 					<td th:unless="${booking.isPaid}" th:text="'Chưa thanh toán'" align="center"></td>
-	
-					<td>
-						<button><a th:href="@{/booking/cancel/{id}(id=${booking.id})}" th:text="'Huỷ đặt phòng'"
-								align="center"></a></button>
+
+					<td th:if="${booking.isReceive}">
+
 					</td>
+					<td th:unless="${booking.isReceive}" style="text-align: left;">
+						<button style="margin: 0; width: 100%; text-align: center;"><a th:href="@{/booking/cancel/{id}(id=${booking.id})}" th:text="'Huỷ đặt phòng'"></a></button>
+					</td>
+
 					
 				</tr>
 			</tbody>

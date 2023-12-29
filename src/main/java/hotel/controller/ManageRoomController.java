@@ -44,6 +44,13 @@ public class ManageRoomController {
 		return "manageRoomList"; 
 	}
 
+	@GetMapping("/booked")
+	public String manageRoomBooked(Model model) {
+		List<Room> roomsOutOfStock = roomRepo.findByStatus("Hết");
+		model.addAttribute("rooms", roomsOutOfStock);
+		return "manageRoomBooked";
+	}
+
 	@GetMapping("/floor/{id}") //
 	public String viewFloor(Model model, @PathVariable("id") Long id, HttpSession session) {
 		List<Room> roomsFL = (List<Room>) roomRepo.findByFloor(id);

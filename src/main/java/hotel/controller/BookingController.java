@@ -121,8 +121,11 @@ private List<Booking> filterByCancel(List<Booking> bookings) {
 		room.setStatus("Trống");
 		roomRepo.save(room);
 		if (booking != null) {
-			booking.setCancelled(true);
-			bookingRepo.save(booking);
+			// Xóa Booking từ cơ sở dữ liệu
+			bookingRepo.delete(booking);
+			System.out.println("Đã xóa Booking thành công.");
+		} else {
+			System.out.println("Không tìm thấy Booking với ID: " + id);
 		}
 		return "redirect:/booking/list";
 	}

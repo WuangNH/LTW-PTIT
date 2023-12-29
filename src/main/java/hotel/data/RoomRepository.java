@@ -16,4 +16,6 @@ public interface RoomRepository extends CrudRepository<Room, Long>{
 
     Room findByName(String roomName);
 
+    List<Room> findByStatus(String status); // Thêm phương thức tìm phòng theo trạng thái
+
 }

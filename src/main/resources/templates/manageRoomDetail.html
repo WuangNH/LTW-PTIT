@@ -164,8 +164,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
-					<button style="margin-left: 20px"><a th:href="@{/manage/room/changeSTT/{id}(id=${room.id})}" th:text="'Trạng thái: '+${room.status}"></a></button>
+				<td colspan="2" th:if="${room.status == 'Hết'}">
+					<button style="margin-left: 20px">
+						<a th:href="@{/manage/room/changeSTT/{id}(id=${room.id})}" th:text="'Trả phòng'"></a>
+					</button>
 				</td>
 			</tr>
 		</table>
