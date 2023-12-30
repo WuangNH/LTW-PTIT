@@ -19,5 +19,9 @@ public interface BookingRepository extends CrudRepository<Booking, Long>{
 	//phương thức findAllByRoom(Room room) để tìm kiếm tất cả các đặt trước(booking) của 1 phòng (room) cụ thể
 	List<Booking> findAllByRoom(Room room);
 
+	List<Booking> findAllByRoomName(String name);
+
+	// phương thức tìm tên phòng, và danh sách nhận phòng
+
 
 }

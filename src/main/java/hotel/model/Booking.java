@@ -33,6 +33,7 @@ public class Booking {
 	private boolean isReceive;//thuộc tính đại diện cho trạng thái khách nhận phòng hay chưa
 	private boolean isPaid;//thuộc tính đại diện cho trạng thái khách thanh toán hay chưa
 	private boolean isCancelled;//thuộc tính đại diện cho trạng thái đơn đặt phòng bị hủy hay chưa
+
 	private String note;
 //	public void isActive() {
 //		this.isReceive = true;

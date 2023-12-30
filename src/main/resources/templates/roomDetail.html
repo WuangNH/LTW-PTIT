@@ -139,10 +139,10 @@
 				<td th:text="'Tầng: '" align="left"></td>
 				<td th:text="${room.floor}"></td>
 			</tr>
-			<tr>
-				<td th:text="'Trạng thái: '" align="left"></td>
-				<td th:text="${room.status}"></td>
-			</tr>
+<!--			<tr>-->
+<!--				<td th:text="'Trạng thái: '" align="left"></td>-->
+<!--				<td th:text="${room.status}"></td>-->
+<!--			</tr>-->
 			<tr>
 				<td th:text="'Giá phòng: '" align="left"></td>
 				<td th:text="${room.price} + ' USD/ngày'"></td>
@@ -159,7 +159,8 @@
 	
 			<tr>
 				<td>
-					<button class="btn btn-primary btn-sm details--room" th:if="${room.status eq 'Trống'}" >
+<!--					<button class="btn btn-primary btn-sm details&#45;&#45;room" th:if="${room.status eq 'Trống'}" >-->
+					<button class="btn btn-primary btn-sm details--room" >
 						<a th:href="@{/booking/{id}(id=${room.id})}" th:text="'Đặt phòng'"></a>
 					</button>
 				</td>

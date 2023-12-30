@@ -22,8 +22,8 @@ import hotel.data.BookingRepository;
 import hotel.data.ClientRepository;
 import hotel.data.RoomRepository;
 
-@Controller 
-@RequestMapping("/booking") 
+@Controller
+@RequestMapping("/booking")
 @SessionAttributes("currentRoom")
 public class BookingController {
 
@@ -41,25 +41,25 @@ public class BookingController {
 		return new Room();
 	}
 
-//	đặt phòng theo id
-@GetMapping("/{id}") // xử lý yêu cầu HTTP trên đường dẫn "/booking/{id}"
-public String bookingForm(Model model,
-						  @PathVariable("id") Long id,
-						  @ModelAttribute("currentRoom") Room room) {
-	Booking booking = new Booking();
-	Room room2 = roomRepo.findById(id).orElse(null);
-	if (room2 != null) {
-		room.setId(room2.getId());
-		room.setName(room2.getName());
-		room.setPrice(room2.getPrice());
-		room.setType(room2.getType());
-		room.setDescription(room2.getDescription());
-		room.setImage(room2.getImage());
+	//	đặt phòng theo id
+	@GetMapping("/{id}") // xử lý yêu cầu HTTP trên đường dẫn "/booking/{id}"
+	public String bookingForm(Model model,
+							  @PathVariable("id") Long id,
+							  @ModelAttribute("currentRoom") Room room) {
+		Booking booking = new Booking();
+		Room room2 = roomRepo.findById(id).orElse(null);
+		if (room2 != null) {
+			room.setId(room2.getId());
+			room.setName(room2.getName());
+			room.setPrice(room2.getPrice());
+			room.setType(room2.getType());
+			room.setDescription(room2.getDescription());
+			room.setImage(room2.getImage());
+		}
+		model.addAttribute("room", room2);
+		model.addAttribute("booking", booking);
+		return "bookingInfo";
 	}
-	model.addAttribute("room", room2);
-	model.addAttribute("booking", booking);
-	return "bookingInfo";
-}
 
 	@PostMapping // xử lý data gửi đến trên đường dẫn "/booking"
 	public String createBooking(Model model, Booking currentBooking, HttpSession session, @RequestParam(name = "floor") Long floor) throws ParseException {
@@ -73,8 +73,19 @@ public String bookingForm(Model model,
 		SimpleDateFormat fomatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateReceipt = fomatter.parse(currentBooking.getCheckin());
 		Date datePayment = fomatter.parse(currentBooking.getCheckout());
+		List<Booking> bookings = bookingRepo.findAllByRoomName(room.getName());
+		for(Booking i : bookings) {
+			Date inDate = fomatter.parse(i.getCheckin());
+			Date outDate = fomatter.parse(i.getCheckout());
+			if(dateReceipt.equals(inDate) || dateReceipt.equals(outDate) || datePayment.equals(inDate) || datePayment.equals(outDate)|| (datePayment.after(inDate) && datePayment.before(outDate)) || ( dateReceipt.after(inDate) && dateReceipt.before(outDate)) || dateReceipt.before(inDate) && datePayment.after(outDate))  {
+				model.addAttribute("message", "Khoảng thời gian đã có người ở");
+				model.addAttribute("room", room);
+				return "bookingInfo";
+			}
+		}
+		Date currentTime = new Date();
 //		kiểm tra ngày
-		if (dateReceipt.after(datePayment) || dateReceipt.equals(datePayment)) {
+		if (dateReceipt.after(datePayment) || dateReceipt.equals(datePayment) || dateReceipt.before(currentTime)) {
 			model.addAttribute("message", "Kiểm tra lại thời gian");
 			model.addAttribute("room", room);
 			return "bookingInfo";
@@ -103,16 +114,16 @@ public String bookingForm(Model model,
 		return "bookingList";
 	}
 
-//	lấy danh sách các phòng đã đặt mà chưa hủy
-private List<Booking> filterByCancel(List<Booking> bookings) {
-	List<Booking> list = new ArrayList<>();
-	for (Booking booking : bookings) {
-		if (booking.isCancelled() == false) {
-			list.add(booking);
+	//	lấy danh sách các phòng đã đặt mà chưa hủy
+	private List<Booking> filterByCancel(List<Booking> bookings) {
+		List<Booking> list = new ArrayList<>();
+		for (Booking booking : bookings) {
+			if (booking.isCancelled() == false) {
+				list.add(booking);
+			}
 		}
+		return list;
 	}
-	return list;
-}
 
 	@GetMapping("/cancel/{id}") // xử lý yêu cầu hủy phòng rồi về trang danh sách phòng đã thuê
 	public String cancelBooking(@PathVariable("id") Long id, HttpSession session) {

@@ -1,0 +1,1 @@
+1) tạo một schema tên là hotel, tài khoản mật khẩu là root dùng bằng mySQL

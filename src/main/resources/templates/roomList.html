@@ -245,7 +245,9 @@
           </div>
           <div class="room-actions" style="width: 210px;">
             <button class="btn btn-primary btn-sm details--room" ><a th:href="@{/room/details/{id}(id=${room.id})}" th:text="'Chi tiết'"></a></button>
-              <button class="btn btn-primary btn-sm details--room" th:if="${room.status eq 'Trống'}" >
+<!--              <button class="btn btn-primary btn-sm details&#45;&#45;room" th:if="${room.status eq 'Trống'}" >-->
+                  <button class="btn btn-primary btn-sm details--room"  >
+
                   <a th:href="@{/booking/{id}(id=${room.id})}" th:text="'Đặt phòng'"></a>
               </button>
 

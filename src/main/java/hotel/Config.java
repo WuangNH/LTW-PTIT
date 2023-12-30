@@ -28,7 +28,8 @@ public class Config extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 		.antMatchers("/account/disable/**", "/account/enable/**", "/account/change/**", "/account/list").hasRole("ADMIN")
 		.antMatchers("/manage/**").hasRole("MANAGER") // áp dụng các quy tắc bảo mật /manage/** với quyền manager 
-		.antMatchers("/booking/**").hasAnyRole("USER")
+		.antMatchers("/booking/**").hasRole("USER")
+//		.antMatchers("/booking/**").hasAnyRole("USER")
 		.antMatchers("/login", "/", "/account/**", "/room/**").permitAll()
 		.anyRequest().authenticated();
 		
