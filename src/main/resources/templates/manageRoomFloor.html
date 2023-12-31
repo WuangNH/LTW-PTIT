@@ -225,11 +225,9 @@
     <div class="floor-count">
         <p>Số tầng:</p>
         <div class="floor-buttons">
-            <button class="floor-button" ><a th:href="@{/manage/room/floor/1}" th:text="'1'"></a></button>
-            <button class="floor-button" ><a th:href="@{/manage/room/floor/2}" th:text="'2'"></a></button>
-            <button class="floor-button" ><a th:href="@{/manage/room/floor/3}" th:text="'3'"></a></button>
-            <button class="floor-button" ><a th:href="@{/manage/room/floor/4}" th:text="'4'"></a></button>
-            <button class="floor-button" ><a th:href="@{/manage/room/floor/5}" th:text="'5'"></a></button>
+            <button th:each="floorNumber : ${#numbers.sequence(1, countFloor)}" class="floor-button">
+                <a th:href="@{/manage/room/floor/{floorNumber}(floorNumber=${floorNumber})}" th:text="${floorNumber}"></a>
+            </button>
         </div>
     </div>
     <div class="floor-count">

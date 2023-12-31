@@ -41,6 +41,8 @@ public class ManageRoomController {
 	public String manageRoomFrm(Model model) {
 		List<Room> rooms = (List<Room>) roomRepo.findAll();
 		model.addAttribute("rooms", rooms);
+		long countFloors = roomRepo.countAvailableFloors();
+		model.addAttribute("countFloor", countFloors);
 		return "manageRoomList"; 
 	}
 
@@ -57,6 +59,8 @@ public class ManageRoomController {
 		model.addAttribute("roomsFL", roomsFL);
 		Long floor = id;
 		model.addAttribute("floor", floor);
+		long countFloors = roomRepo.countAvailableFloors();
+		model.addAttribute("countFloor", countFloors);
 		return "manageRoomFloor";
 	}
 
@@ -75,6 +79,8 @@ public class ManageRoomController {
 		// Thêm giá trị floor và type vào model
 		model.addAttribute("floor", floor);
 		model.addAttribute("type", type);
+		long countFloors = roomRepo.countAvailableFloors();
+		model.addAttribute("countFloor", countFloors);
 
 		return "manageRoomType";
 	}

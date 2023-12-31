@@ -226,11 +226,9 @@
         <div class="floor-count">
             <p>Số tầng:</p>
             <div class="floor-buttons">
-                <button class="floor-button" ><a th:href="@{/room/floor/1}" th:text="'1'"></a></button>
-                <button class="floor-button" ><a th:href="@{/room/floor/2}" th:text="'2'"></a></button>
-                <button class="floor-button" ><a th:href="@{/room/floor/3}" th:text="'3'"></a></button>
-                <button class="floor-button" ><a th:href="@{/room/floor/4}" th:text="'4'"></a></button>
-                <button class="floor-button" ><a th:href="@{/room/floor/5}" th:text="'5'"></a></button>
+                <button th:each="floorNumber : ${#numbers.sequence(1, countFloor)}" class="floor-button">
+                    <a th:href="@{/room/floor/{floorNumber}(floorNumber=${floorNumber})}" th:text="${floorNumber}"></a>
+                </button>
             </div>
         </div>
         <div class="floor-count">
@@ -252,7 +250,8 @@
                 </div>
                 <div class="room-actions" style="width: 210px;">
                     <button class="btn btn-primary btn-sm details--room"><a th:href="@{/room/details/{id}(id=${room.id})}" th:text="'Chi tiết'"></a></button>
-                    <button class="btn btn-primary btn-sm details--room" th:if="${room.status eq 'Trống'}" >
+                    <!--              <button class="btn btn-primary btn-sm details&#45;&#45;room" th:if="${room.status eq 'Trống'}" >-->
+                    <button class="btn btn-primary btn-sm details--room"  >
                         <a th:href="@{/booking/{id}(id=${room.id})}" th:text="'Đặt phòng'"></a>
                     </button>
                 </div>

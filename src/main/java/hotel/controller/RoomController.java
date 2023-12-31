@@ -25,12 +25,15 @@ RoomController {
 	private RoomRepository roomRepo;
 
 	// xem danh sách các phòng
+
 	@GetMapping
 	public String viewList(Model model, HttpSession session) {
 		List<Room> rooms = (List<Room>) roomRepo.findAll();
 		// Sắp xếp danh sách phòng theo thuộc tính name
 		Collections.sort(rooms, Comparator.comparing(Room::getName));
 		model.addAttribute("rooms", rooms);
+		long countFloors = roomRepo.countAvailableFloors();
+		model.addAttribute("countFloor", countFloors);
 		return "roomList";
 	}
 
@@ -41,6 +44,9 @@ RoomController {
 		model.addAttribute("roomsFL", roomsFL);
 		Long floor = id;
 		model.addAttribute("floor", floor);
+		long countFloors = roomRepo.countAvailableFloors();
+		model.addAttribute("countFloor", countFloors);
+//		System.out.println(roomRepo.countAvailableFloors());
 		return "roomFloor";
 	}
 
@@ -53,12 +59,15 @@ RoomController {
 		// Lấy danh sách phòng theo floor và type
 		List<Room> roomsType = roomRepo.findByFloorAndType(floor, type);
 		Collections.sort(roomsType, Comparator.comparing(Room::getName));
+//		System.out.println(roomRepo.countAvailableFloors());
 		// Thêm danh sách phòng vào model
 		model.addAttribute("roomsType", roomsType);
 
 		// Thêm giá trị floor và type vào model
 		model.addAttribute("floor", floor);
 		model.addAttribute("type", type);
+		long countFloors = roomRepo.countAvailableFloors();
+		model.addAttribute("countFloor", countFloors);
 
 		return "roomType";
 	}
@@ -70,6 +79,7 @@ RoomController {
 	public String viewDetails(Model model, @PathVariable("id") Long id, HttpSession session) {
 		Room room = roomRepo.findById(id).orElse(null);
 		model.addAttribute("room", room);
+//		System.out.println(roomRepo.countAvailableFloors());
 		return "roomDetail";
 	}
 }
