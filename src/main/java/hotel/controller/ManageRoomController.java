@@ -114,6 +114,7 @@ public class ManageRoomController {
 	public String confirmChange(Room room, 
 			@SessionAttribute("alteredRoom") Room alteredroom) {
 //		cập nhập các thông tin như giá, loại phòng rồi lưu vào csdl
+		alteredroom.setName(room.getName());
 		alteredroom.setPrice(room.getPrice());
 		alteredroom.setType(room.getType());
 		alteredroom.setFloor(room.getFloor());

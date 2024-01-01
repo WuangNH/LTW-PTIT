@@ -93,7 +93,8 @@
 			<table>
 				<tr>
 					<td th:text="'Tên phòng: '" align="left"></td>
-					<td th:text="*{name}"></td>
+<!--					<td th:text="*{name}"></td>-->
+					<td><input type="text" th:field="${room.name}"></td>
 				</tr>
 				<tr>
 					<td th:text="'Loại phòng: '" align="left"></td>
