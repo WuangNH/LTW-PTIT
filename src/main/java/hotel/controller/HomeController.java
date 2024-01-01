@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import hotel.model.Booking;
 
-
+// controller đầu tiên khi chạy sẽ hiển thị
 @Controller
 public class HomeController {
 	@Autowired
@@ -47,7 +47,7 @@ public class HomeController {
 	}
 
 	@SuppressWarnings("deprecation")
-	@RequestMapping(method = RequestMethod.GET, value = "/viewReport")
+	@RequestMapping(method = RequestMethod.GET, value = "/viewReport")  // tiếp nhập từ trang /viewReport tính năng của manager
 	public String viewReport(@RequestParam(name = "startDate", required = false) String startDateStr,
 	                          @RequestParam(name = "endDate", required = false) String endDateStr,
 	                          Model model) {
@@ -88,7 +88,7 @@ public class HomeController {
 	    }
 	    return "viewReport";
 	}
-	@GetMapping("/enableb/{id}")
+	@GetMapping("/enableb/{id}") // đây là hàm chấp nhận thanh toán và nhận phòng
 	public String enableAccount(@PathVariable("id") Long id) {
 		Booking booking = bookingRepo.findById(id).orElse(null);
 		if (!booking.isReceive()) {
@@ -98,17 +98,18 @@ public class HomeController {
 		}
 		return "redirect:/viewReport";
 	}
-	@GetMapping("/disableb/{id}")
+	@GetMapping("/disableb/{id}") // đầy là hàm hủy đặt phòng
 	public String disableAccount(@PathVariable("id") Long id) {
 		Booking booking = bookingRepo.findById(id).orElse(null);
 		Room room = booking.getRoom();
-		System.out.println(room);
-		room.setStatus("Trống");
+//		System.out.println(room);
+//		room.setStatus("Trống");
 
-		System.out.println(booking.getRoom());
+//		System.out.println(booking.getRoom());
 		if (booking != null) {
 			// Xóa Booking từ cơ sở dữ liệu
 			bookingRepo.delete(booking);
+//			booking.setReceive();
 			System.out.println("Đã xóa Booking thành công.");
 		} else {
 			System.out.println("Không tìm thấy Booking với ID: " + id);
@@ -164,7 +165,7 @@ public class HomeController {
 		return "redirect:/"; // Sau khi đăng xuất, bạn có thể chuyển người dùng đến trang chủ hoặc trang khác tùy ý.
 	}
 
-
+ // đây là hàng hủy đặt phòng
 	@GetMapping("/cancel/{id}") // xử lý yêu cầu HTTP trên đường dẫn "/manage/cancel/{id}"
 	public String cancelBooking(
 			@PathVariable("id") Long id,

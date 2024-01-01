@@ -3,6 +3,7 @@ package hotel.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -84,8 +85,20 @@ public class BookingController {
 			}
 		}
 		Date currentTime = new Date();
+		// Lấy thời gian hiện tại
+		Calendar calendar = Calendar.getInstance();
+		Date currentDate = calendar.getTime();
+
+		// Thêm một ngày
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+
+		// Lấy thời gian sau khi thêm một ngày
+		Date nextDate = calendar.getTime();
+
+		// In ra ngày sau ngày hiện tại
+//		System.out.println("Ngày sau ngày hiện tại: " + nextDate);
 //		kiểm tra ngày
-		if (dateReceipt.after(datePayment) || dateReceipt.equals(datePayment) || dateReceipt.before(currentTime)) {
+		if (dateReceipt.after(datePayment) || dateReceipt.equals(datePayment) || dateReceipt.before(nextDate)) {
 			model.addAttribute("message", "Kiểm tra lại thời gian");
 			model.addAttribute("room", room);
 			return "bookingInfo";
