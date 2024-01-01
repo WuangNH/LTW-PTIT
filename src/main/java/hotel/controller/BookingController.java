@@ -78,10 +78,12 @@ public class BookingController {
 		for(Booking i : bookings) {
 			Date inDate = fomatter.parse(i.getCheckin());
 			Date outDate = fomatter.parse(i.getCheckout());
-			if(dateReceipt.equals(inDate) || dateReceipt.equals(outDate) || datePayment.equals(inDate) || datePayment.equals(outDate)|| (datePayment.after(inDate) && datePayment.before(outDate)) || ( dateReceipt.after(inDate) && dateReceipt.before(outDate)) || dateReceipt.before(inDate) && datePayment.after(outDate))  {
-				model.addAttribute("message", "Khoảng thời gian đã có người ở");
-				model.addAttribute("room", room);
-				return "bookingInfo";
+			if((dateReceipt.equals(inDate) || dateReceipt.equals(outDate) || datePayment.equals(inDate) || datePayment.equals(outDate)|| (datePayment.after(inDate) && datePayment.before(outDate)) || ( dateReceipt.after(inDate) && dateReceipt.before(outDate)) || dateReceipt.before(inDate) && datePayment.after(outDate)))  {
+				if((i.isReceive() && i.isPaid()) || (!i.isPaid() && !i.isReceive())) {
+					model.addAttribute("message", "Kiểm tra lại thời gian hoặc khoảng thời gian đã có người đặt trước hoặc đã có người ở");
+					model.addAttribute("room", room);
+					return "bookingInfo";
+				}
 			}
 		}
 		Date currentTime = new Date();
@@ -98,11 +100,6 @@ public class BookingController {
 		// In ra ngày sau ngày hiện tại
 //		System.out.println("Ngày sau ngày hiện tại: " + nextDate);
 //		kiểm tra ngày
-		if (dateReceipt.after(datePayment) || dateReceipt.equals(datePayment) || dateReceipt.before(nextDate)) {
-			model.addAttribute("message", "Kiểm tra lại thời gian");
-			model.addAttribute("room", room);
-			return "bookingInfo";
-		}
 		Client client = clientRepo.findByUser(account.getUser()).orElse(null);
 		currentBooking.setRoom(room);
 		currentBooking.setClient(client);
@@ -112,6 +109,7 @@ public class BookingController {
 		currentBooking.setTotalPrice(room.getPrice()*totalDays);
 		currentBooking.setReceive(false);
 		currentBooking.setCancelled(false);
+
 		currentBooking.setPaid(false);
 		bookingRepo.save(currentBooking);
 		return "redirect:/room";
@@ -146,8 +144,10 @@ public class BookingController {
 		roomRepo.save(room);
 		if (booking != null) {
 			// Xóa Booking từ cơ sở dữ liệu
-			bookingRepo.delete(booking);
-			System.out.println("Đã xóa Booking thành công.");
+			booking.setStatus("Đã hủy bởi khách hàng");
+			booking.setCancelled(true);
+			bookingRepo.save(booking);
+//			System.out.println("Đã xóa Booking thành công.");
 		} else {
 			System.out.println("Không tìm thấy Booking với ID: " + id);
 		}

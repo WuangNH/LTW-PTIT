@@ -29,6 +29,7 @@ public class Booking {
 	
 	private String checkin;
 	private String checkout;
+	private String status = "Đã đặt lịch";
 	private Long totalPrice;
 	private boolean isReceive;//thuộc tính đại diện cho trạng thái khách nhận phòng hay chưa
 	private boolean isPaid;//thuộc tính đại diện cho trạng thái khách thanh toán hay chưa

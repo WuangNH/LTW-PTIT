@@ -138,10 +138,10 @@
 					<th>Giá phòng</th>
 					<th>Ngày nhận</th>
 					<th>Ngày trả</th>
+					<th>Trạng thái</th>
 					<th>Tổng số tiền</th>
-					<th>Nhận phòng</th>
-					<th>Thanh toán</th>
-					<th>Hành động</th>
+<!--					<th>Thanh toán</th>-->
+					<th style="text-align: center;">Hành động</th>
 				</tr>
 			</thead>
 	
@@ -149,22 +149,44 @@
 				<tr th:each="booking:${bookings}">
 					<td th:text="${booking.room.name}" align="center"></td>
 					<td th:text="${booking.room.type}" align="center"></td>
-					<td th:text="${booking.room.price}" align="center"></td>
+					<td th:text="${booking.room.price}" align="center" th:style="'text-align: right;'"></td>
 					<td th:text="${booking.checkin}" align="center"></td>
 					<td th:text="${booking.checkout}" align="center"></td>
-					<td th:text="${booking.totalPrice}" align="center"></td>
+					<td th:text="${booking.status}" align="center"></td>
+					<td th:text="${booking.totalPrice}" align="center" th:style="'text-align: right;'"></td>
 	
-					<td th:if="${booking.isReceive}" th:text="'Đã nhận phòng'" align="center"></td>
-					<td th:unless="${booking.isReceive}" th:text="'Chưa nhận phòng'" align="center"></td>
-	
-					<td th:if="${booking.isPaid}" th:text="'Đã thanh toán'" align="center"></td>
-					<td th:unless="${booking.isPaid}" th:text="'Chưa thanh toán'" align="center"></td>
+<!--					<td th:if="${booking.isReceive}" th:text="'Đã nhận phòng'" align="center"></td>-->
+<!--					<td th:unless="${booking.isReceive}" th:text="'Chưa nhận phòng'" align="center"></td>-->
+<!--	-->
+<!--					<td th:if="${booking.isPaid}" th:text="'Đã thanh toán'" align="center"></td>-->
+<!--					<td th:unless="${booking.isPaid}" th:text="'Chưa thanh toán'" align="center"></td>-->
 
-					<td th:if="${booking.isReceive}">
-
+					<td th:if="${booking.isReceive()}">
+						<!--						<button>-->
+						<!--							&lt;!&ndash;							<a th:href="@{/manage/booking/cancel/{id}(id=${booking.id})}" th:text="'Huỷ đặt phòng'" align="center"></a>&ndash;&gt;-->
+						<!--							<a th:href="@{/manage/booking/cancel/{id}(id=${booking.id}, roomName=${booking.room.name})}" th:text="'Huỷ đặt phòng'" align="center"></a>-->
+						<!--						</button>-->
+						<!--						<button>-->
+						<!--							<a th:href="@{/disableb/{id}(id=${booking.id})}" th:text="'Trả phòng'"-->
+						<!--								   align="center"></a>-->
+						<!--						</button>-->
+						<button th:if="${booking.isPaid()}">
+							<a th:href="@{/checkout/{id}(id=${booking.id})}" th:text="'Trả phòng '"
+							   align="center"></a>
+						</button>
 					</td>
-					<td th:unless="${booking.isReceive}" style="text-align: left;">
-						<button style="margin: 0; width: 100%; text-align: center;"><a th:href="@{/booking/cancel/{id}(id=${booking.id})}" th:text="'Huỷ đặt phòng'"></a></button>
+					<td th:unless="${booking.isReceive()}">
+
+						<button th:unless="${booking.isPaid()}">
+							<!--							<a th:href="@{/manage/booking/cancel/{id}(id=${booking.id})}" th:text="'Huỷ đặt phòng'" align="center"></a>-->
+							<a th:href="@{/disableb/{id}(id=${booking.id}, roomName=${booking.room.name})}" th:text="'Huỷ đặt phòng'" align="center"></a>
+						</button>
+						<button th:unless="${booking.isPaid()}">
+							<a th:href="@{/enableb/{id}(id=${booking.id})}" th:text="'Nhận Phòng '"
+							   align="center"></a>
+						</button>
+
+
 					</td>
 
 					

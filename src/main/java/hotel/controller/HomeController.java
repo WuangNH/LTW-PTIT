@@ -88,12 +88,21 @@ public class HomeController {
 	    }
 	    return "viewReport";
 	}
+	@GetMapping("/checkout/{id}") // đây là hàm chấp nhận thanh toán và nhận phòng
+	public String checkoutAccount(@PathVariable("id") Long id) {
+		Booking booking = bookingRepo.findById(id).orElse(null);
+		booking.setStatus("Đã trả phòng");
+		booking.setReceive(false);
+		bookingRepo.save(booking);
+		return "redirect:/viewReport";
+	}
 	@GetMapping("/enableb/{id}") // đây là hàm chấp nhận thanh toán và nhận phòng
 	public String enableAccount(@PathVariable("id") Long id) {
 		Booking booking = bookingRepo.findById(id).orElse(null);
 		if (!booking.isReceive()) {
 			booking.setReceive(true);
 			booking.setPaid(true);
+			booking.setStatus("Đã nhận phòng và thanh toán");
 			bookingRepo.save(booking);
 		}
 		return "redirect:/viewReport";
@@ -108,9 +117,9 @@ public class HomeController {
 //		System.out.println(booking.getRoom());
 		if (booking != null) {
 			// Xóa Booking từ cơ sở dữ liệu
-			bookingRepo.delete(booking);
-//			booking.setReceive();
-			System.out.println("Đã xóa Booking thành công.");
+			booking.setStatus("Đã hủy bởi quản lý");
+			booking.setCancelled(true);
+			bookingRepo.save(booking);
 		} else {
 			System.out.println("Không tìm thấy Booking với ID: " + id);
 		}
