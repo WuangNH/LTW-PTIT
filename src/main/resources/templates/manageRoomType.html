@@ -206,6 +206,67 @@
         .floor-button a {
             text-decoration: none;
         }
+/* Điều chỉnh cho thiết bị di động */
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  ul.nav-menu {
+    flex-direction: column;
+  }
+
+  .nav-link {
+    margin-bottom: 10px;
+  }
+
+  .room-item {
+    width: 100%;
+    min-width: auto;
+    flex-direction: column;
+  }
+
+  .room-image img {
+    max-width: 100%;
+  }
+
+  .room-info {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .room-actions {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .floor-count {
+    flex-direction: column;
+  }
+
+  .floor-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .floor-button {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+  }
+}
+
+/* Điều chỉnh cho tablet và các thiết bị lớn hơn */
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+  body {
+    font-size: 16px;
+  }
+
+  .room-item {
+    width: 48%;
+  }
+}
 
     </style>
 </head>
