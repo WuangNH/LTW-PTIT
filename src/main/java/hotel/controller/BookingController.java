@@ -75,11 +75,16 @@ public class BookingController {
 		Date dateReceipt = fomatter.parse(currentBooking.getCheckin());
 		Date datePayment = fomatter.parse(currentBooking.getCheckout());
 		List<Booking> bookings = bookingRepo.findAllByRoomName(room.getName());
+		if (dateReceipt.after(datePayment) || dateReceipt.equals(datePayment)) {
+			model.addAttribute("message", "Kiem tra lai thoi gian");
+			model.addAttribute("room", room);
+			return "bookingInfo";
+		}
 		for(Booking i : bookings) {
 			Date inDate = fomatter.parse(i.getCheckin());
 			Date outDate = fomatter.parse(i.getCheckout());
 			if((dateReceipt.equals(inDate) || dateReceipt.equals(outDate) || datePayment.equals(inDate) || datePayment.equals(outDate)|| (datePayment.after(inDate) && datePayment.before(outDate)) || ( dateReceipt.after(inDate) && dateReceipt.before(outDate)) || dateReceipt.before(inDate) && datePayment.after(outDate)))  {
-				if((i.isReceive() && i.isPaid()) || (!i.isPaid() && !i.isReceive())) {
+				if((i.isReceive() && i.isPaid()) || (!i.isPaid() && !i.isReceive()) ) {
 					model.addAttribute("message", "Kiểm tra lại thời gian hoặc khoảng thời gian đã có người đặt trước hoặc đã có người ở");
 					model.addAttribute("room", room);
 					return "bookingInfo";

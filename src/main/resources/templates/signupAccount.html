@@ -124,6 +124,9 @@
 					<td><input type="password" th:field="*{password}"></td>
 					<td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
 				</tr>
+				<tr th:if="${notice}" style="color: red;">
+					<td colspan="2" th:text="${notice}"></td>
+				</tr>
 				<tr>
 					<td></td>
 					<td class="submit-button"><input type="submit" value="Đăng kí"></td>

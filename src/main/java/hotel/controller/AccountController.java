@@ -95,11 +95,15 @@ public class AccountController {
 	}
 	//sử dụng để nhận thông tin đăng nhập
 		@PostMapping("/create")
-		public String registerAccount(@Valid Account account, Errors errors, HttpSession session) {
+		public String registerAccount(Model model, @Valid Account account, Errors errors, HttpSession session) {
 			if(errors.hasErrors()) { 
 				return "signupAccount";
 			}
-			
+			Account ac = accountRepo.findByUsername1(account.getUsername());
+		if (ac != null) {
+			model.addAttribute("notice", "Tài khoản đã tồi tại");
+			return "signupAccount";
+		}
 			User addedUser = (User) session.getAttribute("addedUser");
 			Client addedClient = (Client) session.getAttribute("addedClient");
 			addedClient.setAddress(addedUser.getAddress());

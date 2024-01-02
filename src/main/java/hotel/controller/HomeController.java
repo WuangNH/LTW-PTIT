@@ -88,7 +88,7 @@ public class HomeController {
 	    }
 	    return "viewReport";
 	}
-	@GetMapping("/checkout/{id}") // đây là hàm chấp nhận thanh toán và nhận phòng
+	@GetMapping("/checkout/{id}") // đây là hàm  trả phòng
 	public String checkoutAccount(@PathVariable("id") Long id) {
 		Booking booking = bookingRepo.findById(id).orElse(null);
 		booking.setStatus("Đã trả phòng");

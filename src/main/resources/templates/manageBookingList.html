@@ -160,7 +160,7 @@
 					<td th:text="${booking.checkout}" align="center"></td>
 					<td th:text="${booking.status}" align="center"></td>
 					<td th:text="${booking.totalPrice}" align="center" th:style="'text-align: right;'"></td>
-					<td th:if="${booking.isReceive()}">
+					<td th:if="${booking.isReceive()}" style="width: 250px;">
 						<button th:if="${booking.isPaid()}">
 							<a th:href="@{/manage/booking/checkout/{id}(id=${booking.id})}" th:text="'Trả phòng '"
 							   align="center"></a>

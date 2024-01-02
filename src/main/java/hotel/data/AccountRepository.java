@@ -2,6 +2,7 @@ package hotel.data;
 
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +15,6 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
 	//Optional<Account> để tránh trả về null khi không tìm thấy đối tượng Account tương ứng với username.
 	Optional<Account> findByUsername(String username);
 
+	@Query("SELECT a FROM Account a WHERE a.username = :username")
+	Account findByUsername1( String username);
 }

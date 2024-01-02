@@ -261,7 +261,7 @@
 <!--	-->
 <!--					<td th:if="${booking.isPaid}" th:text="'Đã thanh toán'" align="center"></td>-->
 <!--					<td th:unless="${booking.isPaid}" th:text="'Chưa thanh toán'" align="center"></td>-->
-					<td th:if="${booking.isReceive()}">
+					<td th:if="${booking.isReceive()}" style="width: 250px;">
 <!--						<button>-->
 <!--							&lt;!&ndash;							<a th:href="@{/manage/booking/cancel/{id}(id=${booking.id})}" th:text="'Huỷ đặt phòng'" align="center"></a>&ndash;&gt;-->
 <!--							<a th:href="@{/manage/booking/cancel/{id}(id=${booking.id}, roomName=${booking.room.name})}" th:text="'Huỷ đặt phòng'" align="center"></a>-->
