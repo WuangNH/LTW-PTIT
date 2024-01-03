@@ -114,7 +114,7 @@ public class ManageBookingController {
 			// Xóa Booking từ cơ sở dữ liệu
 			booking.setStatus("Đã hủy bởi quản lý");
 			booking.setCancelled(true);
-			bookingRepo.save(booking);
+			bookingRepo.delete(booking);
 		} else {
 			System.out.println("Không tìm thấy Booking với ID: " + id);
 		}

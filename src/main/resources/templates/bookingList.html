@@ -179,7 +179,7 @@
 
 						<button th:unless="${booking.isPaid()}">
 							<!--							<a th:href="@{/manage/booking/cancel/{id}(id=${booking.id})}" th:text="'Huỷ đặt phòng'" align="center"></a>-->
-							<a th:href="@{/disableb/{id}(id=${booking.id}, roomName=${booking.room.name})}" th:text="'Huỷ đặt phòng'" align="center"></a>
+							<a th:href="@{cancel/{id}(id=${booking.id}, roomName=${booking.room.name})}" th:text="'Huỷ đặt phòng'" align="center"></a>
 						</button>
 <!--						<button th:unless="${booking.isPaid()}">-->
 <!--							<a th:href="@{/enableb/{id}(id=${booking.id})}" th:text="'Nhận Phòng '"-->

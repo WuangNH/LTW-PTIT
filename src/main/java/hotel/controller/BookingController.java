@@ -75,22 +75,6 @@ public class BookingController {
 		Date dateReceipt = fomatter.parse(currentBooking.getCheckin());
 		Date datePayment = fomatter.parse(currentBooking.getCheckout());
 		List<Booking> bookings = bookingRepo.findAllByRoomName(room.getName());
-		if (dateReceipt.after(datePayment) || dateReceipt.equals(datePayment)) {
-			model.addAttribute("message", "Kiem tra lai thoi gian");
-			model.addAttribute("room", room);
-			return "bookingInfo";
-		}
-		for(Booking i : bookings) {
-			Date inDate = fomatter.parse(i.getCheckin());
-			Date outDate = fomatter.parse(i.getCheckout());
-			if((dateReceipt.equals(inDate) || dateReceipt.equals(outDate) || datePayment.equals(inDate) || datePayment.equals(outDate)|| (datePayment.after(inDate) && datePayment.before(outDate)) || ( dateReceipt.after(inDate) && dateReceipt.before(outDate)) || dateReceipt.before(inDate) && datePayment.after(outDate)))  {
-				if((i.isReceive() && i.isPaid()) || (!i.isPaid() && !i.isReceive()) ) {
-					model.addAttribute("message", "Kiểm tra lại thời gian hoặc khoảng thời gian đã có người đặt trước hoặc đã có người ở");
-					model.addAttribute("room", room);
-					return "bookingInfo";
-				}
-			}
-		}
 		Date currentTime = new Date();
 		// Lấy thời gian hiện tại
 		Calendar calendar = Calendar.getInstance();
@@ -101,10 +85,23 @@ public class BookingController {
 
 		// Lấy thời gian sau khi thêm một ngày
 		Date nextDate = calendar.getTime();
+		if (dateReceipt.after(datePayment) || dateReceipt.equals(datePayment) || dateReceipt.before(nextDate)) {
+			model.addAttribute("message", "Kiểm tra lại thời gian");
+			model.addAttribute("room", room);
+			return "bookingInfo";
+		}
+		for(Booking i : bookings) {
+			Date inDate = fomatter.parse(i.getCheckin());
+			Date outDate = fomatter.parse(i.getCheckout());
+			if((dateReceipt.equals(inDate) || dateReceipt.equals(outDate) || datePayment.equals(inDate) || datePayment.equals(outDate)|| (datePayment.after(inDate) && datePayment.before(outDate)) || ( dateReceipt.after(inDate) && dateReceipt.before(outDate)) || dateReceipt.before(inDate) && datePayment.after(outDate)))  {
+				if((i.isReceive() && i.isPaid()) || (!i.isPaid() && !i.isReceive())  ) {
+					model.addAttribute("message", "Kiểm tra lại thời gian hoặc khoảng thời gian đã có người đặt trước hoặc đã có người ở");
+					model.addAttribute("room", room);
+					return "bookingInfo";
+				}
+			}
+		}
 
-		// In ra ngày sau ngày hiện tại
-//		System.out.println("Ngày sau ngày hiện tại: " + nextDate);
-//		kiểm tra ngày
 		Client client = clientRepo.findByUser(account.getUser()).orElse(null);
 		currentBooking.setRoom(room);
 		currentBooking.setClient(client);
@@ -144,14 +141,12 @@ public class BookingController {
 	@GetMapping("/cancel/{id}") // xử lý yêu cầu hủy phòng rồi về trang danh sách phòng đã thuê
 	public String cancelBooking(@PathVariable("id") Long id, HttpSession session) {
 		Booking booking = bookingRepo.findById(id).orElse(null);
-		Room room = (Room) session.getAttribute("currentRoom");
-		room.setStatus("Trống");
-		roomRepo.save(room);
+
 		if (booking != null) {
 			// Xóa Booking từ cơ sở dữ liệu
 			booking.setStatus("Đã hủy bởi khách hàng");
 			booking.setCancelled(true);
-			bookingRepo.save(booking);
+			bookingRepo.delete(booking);
 //			System.out.println("Đã xóa Booking thành công.");
 		} else {
 			System.out.println("Không tìm thấy Booking với ID: " + id);
