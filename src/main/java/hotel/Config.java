@@ -23,21 +23,21 @@ public class Config extends WebSecurityConfigurerAdapter{
 	}
 	
 	protected void configure(HttpSecurity http) throws Exception {
-		// http.authorizeRequests() chỉ định rằng yêu cầu sẽ được xác minh bằng cách nào  
+		// http.authorizeRequests() chỉ định rằng yêu cầu sẽ được xác minh bằng cách nào
 		// Phương thức antMatchers chỉ định các URL và các quyền truy cập cần thiết để truy cập vào chúng.
 		http.authorizeRequests()
 		.antMatchers("/account/disable/**", "/account/enable/**", "/account/change/**", "/account/list").hasRole("ADMIN")
-		.antMatchers("/manage/**").hasRole("MANAGER") // áp dụng các quy tắc bảo mật /manage/** với quyền manager 
+		.antMatchers("/manage/**").hasRole("MANAGER") // áp dụng các quy tắc bảo mật /manage/** với quyền manager
 		.antMatchers("/booking/**").hasRole("USER")
 //		.antMatchers("/booking/**").hasAnyRole("USER")
 		.antMatchers("/login", "/", "/account/**", "/room/**").permitAll()
 		.anyRequest().authenticated();
-		
+
 		// http.formLogin() xác định cấu hình xác thực thông qua form đăng nhập.
 		http.formLogin()
-		.loginPage("/login") // chỉ định URL của trang đăng nhập. 
+		.loginPage("/login") // chỉ định URL của trang đăng nhập.
 		.defaultSuccessUrl("/authen", true); // chỉ định URL được chuyển hướng đến khi đăng nhập thành công
-		
+
 		// đăng xuất của ứng dụng
 		http.logout()
 		.logoutUrl("/logout") // URL sẽ xử lý yêu cầu đăng xuất

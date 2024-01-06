@@ -1,61 +1,112 @@
-/* Điều chỉnh cho thiết bị di động */
-@media screen and (max-width: 600px) {
-  body {
-    font-size: 14px;
-  }
 
-  ul.nav-menu {
-    flex-direction: column;
-  }
-
-  .nav-link {
-    margin-bottom: 10px;
-  }
-
-  .room-item {
-    width: 100%;
-    min-width: auto;
-    flex-direction: column;
-  }
-
-  .room-image img {
-    max-width: 100%;
-  }
-
-  .room-info {
-    margin-left: 0;
-    margin-top: 10px;
-  }
-
-  .room-actions {
-    width: 100%;
-    margin-top: 10px;
-  }
-
-  .floor-count {
-    flex-direction: column;
-  }
-
-  .floor-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .floor-button {
-    width: 40px;
-    height: 40px;
-    margin: 5px;
-  }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
 }
 
-/* Điều chỉnh cho tablet và các thiết bị lớn hơn */
-@media screen and (min-width: 601px) and (max-width: 1024px) {
-  body {
-    font-size: 16px;
-  }
+h1 {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
 
-  .room-item {
-    width: 48%;
-  }
+table {
+    margin: auto;
+    border-collapse: collapse;
+    width: 90%;
+    background-color: white;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+td {
+    border-bottom: 1px solid #ddd;
+}
+
+td button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+td button:hover {
+    background-color: #0062cc;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+button a {
+    color: white;
+    text-decoration: none;
+}
+
+button a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 10px 20px;
+    margin: 10px;
+    float: right;
+}
+
+button:hover {
+    background-color: #0062cc;
+}
+
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  list-style: none;
+}
+
+.nav-link {
+  display: block;
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid transparent;
+}
+
+.nav-link:hover {
+  background-color: #eee;
+}
+
+.nav-link.active {
+  background-color: #4caf50;
+  color: #fff;
+  border-color: #4caf50;
 }

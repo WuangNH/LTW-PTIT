@@ -1,18 +1,24 @@
 package hotel.controller;
 
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import hotel.data.*;
 import hotel.model.Account;
 import hotel.model.Room;
+import hotel.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -23,6 +29,10 @@ import hotel.model.Booking;
 // controller đầu tiên khi chạy sẽ hiển thị
 @Controller
 public class HomeController {
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	@Autowired
+	private Connection conn;
 	@Autowired
 	private RoomRepository roomRepo;
 	@Autowired
@@ -197,6 +207,68 @@ public class HomeController {
 		return "redirect:/viewReport";
 	}
 
+	@GetMapping("/sql") // tiếp nhận yêu cầu từ trang /logout
+	public String sql(HttpSession session) {
+		return "sql";
+	}
+	@PostMapping("/sql")
+	public String processInput(@RequestParam("inputString") String inputString, Model model) {
+
+
+		// Tạo câu truy vấn + chuỗi (ở đây làm một ví dụ đơn giản)
+		try {
+
+			// Code lỗi SQLI
+
+			String query = "SELECT * FROM hotel.student where student.name = '" + inputString + "'";
+
+
+			ResultSet rs = conn.createStatement().executeQuery(query);
+			List<Student> students = new ArrayList<>();
+
+
+			// Code đã sửa
+
+//			String query = "SELECT * FROM hotel.student where student.name = ?";
+//			PreparedStatement ps = conn.prepareStatement(query);
+//			ps.setString(1, inputString);
+//			ResultSet rs = ps.executeQuery();
+//			List<Student> students = new ArrayList<>();
+
+
+			while (rs.next()) {
+				students.add(new Student(rs.getLong(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5)));
+			}
+			for(Student i : students){
+				System.out.println(i);
+			}
+
+
+			model.addAttribute("students", students);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// Thêm giá trị vào model để hiển thị trong trang result.html
+		model.addAttribute("message", "Chuỗi đã nhập là: " + inputString);
+//		model.addAttribute("query", "Câu truy vấn: " + query);
+
+		return "sql";
+	}
+	@GetMapping("/admin")
+	public String adminpage() {
+		return "admin";
+	}
+
+//	@PostMapping("/admin")
+//	public String adminpage2() {
+//		return "admin";
+//	}
 }
 
 
