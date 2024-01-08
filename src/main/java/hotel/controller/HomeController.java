@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import hotel.data.*;
@@ -25,6 +28,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import hotel.model.Booking;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 // controller đầu tiên khi chạy sẽ hiển thị
 @Controller
@@ -48,10 +52,23 @@ public class HomeController {
 	private ClientRepository clientRepo;
 	
 	@RequestMapping("/") // tiếp nhận yêu cầu từ trang /
-	public String home(Model model, HttpSession session) {
+	public String home(Model model, HttpSession session, RedirectAttributes redirectAttributes,  HttpServletRequest request,  HttpServletResponse response) {
+//		Cookie[] cookies = request.getCookies();
+//		if (cookies != null) {
+//			for (Cookie cookie : cookies) {
+//				// Đặt thời gian sống của cookie về 0 để nó hết hiệu lực
+//				cookie.setMaxAge(0);
+//
+//				// Thêm cookie vào phản hồi để xóa nó
+//				response.addCookie(cookie);
+//			}
+//		}
 		// dùng model để lưu data từ session
 		if (session.getAttribute("currentAccount") != null) {
 			model.addAttribute("account", session.getAttribute("currentAccount"));
+			Account account = (Account) model.getAttribute("account");
+			System.out.println(account);
+			redirectAttributes.addFlashAttribute("account", account);
 		}
 		return "home";
 	}
@@ -178,7 +195,17 @@ public class HomeController {
 	}
 
 	@PostMapping("/logout")
-	protected String logout2(HttpSession session) {
+	protected String logout2(HttpSession session,Model model, HttpServletResponse response, HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                // Đặt thời gian sống của cookie về 0 để nó hết hiệu lực
+                cookie.setMaxAge(0);
+
+                // Thêm cookie vào phản hồi để xóa nó
+                response.addCookie(cookie);
+            }
+        }
 		// Xử lý đăng xuất ở đây (invalidate session, xóa thông tin đăng nhập, v.v.)
 		session.invalidate();
 		return "redirect:/"; // Sau khi đăng xuất, bạn có thể chuyển người dùng đến trang chủ hoặc trang khác tùy ý.

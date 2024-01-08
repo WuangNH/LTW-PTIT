@@ -61,6 +61,7 @@ public class AccountController {
 			Account account = (Account) session.getAttribute("currentAccount");
 			model.addAttribute("account", account); 
 		}
+
 		return "account";
 	}
 
