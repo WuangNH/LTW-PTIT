@@ -20,6 +20,7 @@ public class Account {
 	@Id
 	@GeneratedValue
 	private Long id;
+
 	
 	@Size(min=5, message = "Tên đăng nhập ít nhất 5 kí tự")
 	private String username;
@@ -28,7 +29,7 @@ public class Account {
 	
 	private boolean active;//thuộc tính active để biết trạng thái tài khoản có hoạt động hay không
 	private String roles;//thuộc tính roles để biết vai trò của tài khoản
-
+	private long balance = 1000000;
 	private Date createdAt;//thuôc tính createAt để biết thời gian tài khoản được tạo 
 	
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.MERGE)

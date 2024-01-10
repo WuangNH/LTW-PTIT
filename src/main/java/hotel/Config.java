@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +26,10 @@ public class Config extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		// http.authorizeRequests() chỉ định rằng yêu cầu sẽ được xác minh bằng cách nào
 		// Phương thức antMatchers chỉ định các URL và các quyền truy cập cần thiết để truy cập vào chúng.
-		http.authorizeRequests()
+		http.csrf()
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				.and()
+				.authorizeRequests()
 		.antMatchers("/account/disable/**", "/account/enable/**", "/account/change/**", "/account/list").hasRole("ADMIN")
 		.antMatchers("/manage/**").hasRole("MANAGER") // áp dụng các quy tắc bảo mật /manage/** với quyền manager
 		.antMatchers("/booking/**").hasRole("USER")

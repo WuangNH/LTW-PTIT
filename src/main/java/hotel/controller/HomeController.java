@@ -236,7 +236,7 @@ public class HomeController {
 
 	@GetMapping("/sql") // tiếp nhận yêu cầu từ trang /logout
 	public String sql(HttpSession session) {
-		return "sql";
+		return "vulnerability/sql";
 	}
 	@PostMapping("/sql")
 	public String processInput(@RequestParam("inputString") String inputString, Model model) {
@@ -285,7 +285,7 @@ public class HomeController {
 		model.addAttribute("message", "Chuỗi đã nhập là: " + inputString);
 //		model.addAttribute("query", "Câu truy vấn: " + query);
 
-		return "sql";
+		return "vulnerability/sql";
 	}
 	@GetMapping("/admin")
 	public String adminpage() {

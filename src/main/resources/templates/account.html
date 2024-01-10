@@ -132,6 +132,10 @@
 					<td th:text="${account.user.phoneNumber}"></td>
 				</tr>
 				<tr>
+					<td th:text="'Số dư:'"></td>
+					<td th:text="${account.balance}"></td>
+				</tr>
+				<tr>
 					<td>
 						<span><button class="dang-nhap"><a th:href="@{logout}" th:text="'Đăng xuất'"></a></button></span>
 					</td>

@@ -116,8 +116,10 @@ public class AccountController {
 			userRepo.save(addedUser);
 			
 			account.setActive(true);
-			account.setRoles("ROLE_USER");		
+			account.setRoles("ROLE_USER");
+			account.setBalance(100000);
 			account.setUser(addedUser);
+
 			accountRepo.save(account);
 			
 			addedClient.setUser(addedUser);
